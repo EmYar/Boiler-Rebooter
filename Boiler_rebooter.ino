@@ -22,15 +22,14 @@ constexpr uint8_t BUTTON_PIN = 13;
 
 constexpr int SERVO_DEFAULT_ANGLE = 90;
 constexpr int SERVO_PRESS_BUTTON_ANGLE = 120;
-constexpr int SERVO_MAX_ANGLE = 180;
 
 constexpr int BRIGHTNESS_THRESHOLD = 300;
 
 constexpr uint8_t maxAttemptsCount = 3;
 
 Detector detector(POT_PIN, LED_PIN, BRIGHTNESS_THRESHOLD);
-ButtonPusher buttonPusher(SERVO_PIN, SERVO_DEFAULT_ANGLE, SERVO_PRESS_BUTTON_ANGLE, SERVO_MAX_ANGLE);
-StateMonitor stateMonitor(LCD_PIN_RS, LCD_PIN_EN, LCD_PIN_DB4, LCD_PIN_DB5, LCD_PIN_DB6, LCD_PIN_DB7, &detector, &buttonPusher);
+ButtonPusher buttonPusher(SERVO_PIN, SERVO_DEFAULT_ANGLE, SERVO_PRESS_BUTTON_ANGLE);
+StateMonitor stateMonitor(LCD_PIN_RS, LCD_PIN_EN, LCD_PIN_DB4, LCD_PIN_DB5, LCD_PIN_DB6, LCD_PIN_DB7, &detector);
 Speaker speaker(BUZZER_PIN);
 
 void setup() {
@@ -62,6 +61,7 @@ void pressHeaterResetButton() {
     return;
   }
 
+  stateMonitor.displayResetAttempt();
   buttonPusher.pushButton();
   stateMonitor.increaseAttemptNumber();
 

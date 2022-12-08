@@ -13,7 +13,5 @@ void Speaker::playSoftResetSuccessful() {
 }
 
 void Speaker::playHardResetRequest() {
-  tone(pin, 3000, 500);
-  tone(pin, 3000, 500);
-  tone(pin, 3000, 500);
+  tone(pin, 3000, 1000);
 }

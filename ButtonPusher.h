@@ -10,10 +10,9 @@ class ButtonPusher {
     Servo servo;
     int servoDefaultAngle;
     int servoPushButtonAngle;
-    int servoMaxAngle;
 
   public:
-    ButtonPusher(uint8_t servoPin, int servoDefaultAngle, int servoPushButtonAngle, int servoMaxAngle);
+    ButtonPusher(uint8_t servoPin, int servoDefaultAngle, int servoPushButtonAngle);
     void pushButton();
     int getCurrentAngle();
 };

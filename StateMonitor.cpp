@@ -8,12 +8,10 @@ StateMonitor::StateMonitor(
       uint8_t pinDb5,
       uint8_t pinDb6,
       uint8_t pinDb7,
-      Detector* detector,
-      ButtonPusher* buttonPusher
+      Detector* detector
 ) {
   lcd = new LiquidCrystal(pinRs, pinEn, pinDb4, pinDb5, pinDb6, pinDb7);
   this->detector = detector;
-  this->buttonPusher = buttonPusher;
 
   lcd->begin(16, 2);
   lcd->clear();
@@ -56,10 +54,6 @@ void StateMonitor::displayStatusScreen() {
       lcd->print("Brightness");
       lcd->setCursor(0, 1);
       lcd->print(detector->getBrightness());
-  } else if (currentScreen == 2) {
-    lcd->print("Servo angle");
-      lcd->setCursor(0, 1);
-      lcd->print(buttonPusher->getCurrentAngle());
   }
 }
 
@@ -81,9 +75,10 @@ void StateMonitor::displayResetAttempt() {
 
   isScreenRotationEnabled = false;
 
-  lcd->println("Trying to reset");
+  lcd->print("Trying to reset");
+  lcd->setCursor(0, 1);
   lcd->print("the boiler..");
-  lcd->print(attemptNumber);
+  lcd->print(attemptNumber + 1);
  }
 
  void StateMonitor::displayManualResetRequest() {
@@ -92,8 +87,9 @@ void StateMonitor::displayResetAttempt() {
 
   isScreenRotationEnabled = false;
 
-  lcd->println("Failed to reset");
-  lcd->println("Unplug a boiler");
+  lcd->print("Failed to reset");
+  lcd->setCursor(0, 1);
+  lcd->print("Unplug a boiler");
  }
 
 void StateMonitor::registerSoftReset() {

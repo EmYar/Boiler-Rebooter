@@ -12,7 +12,7 @@ class StateMonitor {
     LiquidCrystal* lcd;
 
     uint8_t currentScreen = 0;
-    const uint8_t lastScreen = 2;
+    const uint8_t lastScreen = 1;
     bool isScreenRotationEnabled = true;
 
     uint8_t attemptNumber = 0;
@@ -32,8 +32,7 @@ class StateMonitor {
       uint8_t pinDb5,
       uint8_t pinDb6,
       uint8_t pinDb7,
-      Detector* detector,
-      ButtonPusher* buttonPusher
+      Detector* detector
     );
 
     void rotateStatusScreens();
