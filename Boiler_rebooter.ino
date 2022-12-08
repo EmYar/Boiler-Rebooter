@@ -1,6 +1,7 @@
 #include "Detector.h"
 #include "StateMonitor.h"
 #include "ButtonPusher.h"
+#include "Speaker.h"
 
 constexpr uint8_t POT_PIN = A0;
 
@@ -29,6 +30,7 @@ constexpr uint8_t maxAttemptsCount = 3;
 
 Detector detector(POT_PIN, LED_PIN, BRIGHTNESS_THRESHOLD);
 StateMonitor stateMonitor(LCD_PIN_RS, LCD_PIN_EN, LCD_PIN_DB4, LCD_PIN_DB5, LCD_PIN_DB6, LCD_PIN_DB7);
+Speaker speaker(BUZZER_PIN);
 ButtonPusher buttonPusher(SERVO_PIN, SERVO_DEFAULT_ANGLE, SERVO_PRESS_BUTTON_ANGLE, SERVO_MAX_ANGLE);
 
 void setup() {
@@ -56,6 +58,7 @@ void loop() {
 void pressHeaterResetButton() {
   if (stateMonitor.getAttemptNumber() == maxAttemptsCount) {
     stateMonitor.displayManualResetRequest();
+    speaker.playHardResetRequest();
     return;
   }
 
@@ -68,6 +71,7 @@ void pressHeaterResetButton() {
     pressHeaterResetButton();
   } else {
     stateMonitor.registerSoftReset();
+    speaker.playSoftResetSuccessful();
     stateMonitor.resetAttemptNumber();
   }
 }
