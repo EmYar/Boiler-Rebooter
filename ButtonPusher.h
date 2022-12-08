@@ -8,13 +8,14 @@
 class ButtonPusher {
   private:
     Servo servo;
-    uint8_t servoDefaultAngle;
-    uint8_t servoPushButtonAngle;
-    uint8_t servoMaxAngle;
+    int servoDefaultAngle;
+    int servoPushButtonAngle;
+    int servoMaxAngle;
 
   public:
-    ButtonPusher(uint8_t servoPin, uint8_t servoDefaultAngle, uint8_t servoPushButtonAngle, uint8_t servoMaxAngle);
+    ButtonPusher(uint8_t servoPin, int servoDefaultAngle, int servoPushButtonAngle, int servoMaxAngle);
     void pushButton();
+    int getCurrentAngle();
 };
 
 #endif

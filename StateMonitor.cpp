@@ -1,8 +1,19 @@
 // StateMonitor.cpp
 #include "StateMonitor.h"
 
-StateMonitor::StateMonitor(uint8_t pinRs, uint8_t pinEn, uint8_t pinDb4, uint8_t pinDb5, uint8_t pinDb6, uint8_t pinDb7) {
+StateMonitor::StateMonitor(
+      uint8_t pinRs,
+      uint8_t pinEn,
+      uint8_t pinDb4,
+      uint8_t pinDb5,
+      uint8_t pinDb6,
+      uint8_t pinDb7,
+      Detector* detector,
+      ButtonPusher* buttonPusher
+) {
   lcd = new LiquidCrystal(pinRs, pinEn, pinDb4, pinDb5, pinDb6, pinDb7);
+  this->detector = detector;
+  this->buttonPusher = buttonPusher;
 
   lcd->begin(16, 2);
   lcd->clear();
@@ -42,9 +53,13 @@ void StateMonitor::displayStatusScreen() {
       lcd->print(",Hrd:");
       lcd->print(hardRestarts);
   } else if (currentScreen == 1) {
-      lcd->print("Current brt");
+      lcd->print("Brightness");
       lcd->setCursor(0, 1);
-      lcd->print(currentBrightness);
+      lcd->print(detector->getBrightness());
+  } else if (currentScreen == 2) {
+    lcd->print("Servo angle");
+      lcd->setCursor(0, 1);
+      lcd->print(buttonPusher->getCurrentAngle());
   }
 }
 

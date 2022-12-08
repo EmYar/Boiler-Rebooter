@@ -9,11 +9,14 @@ class Detector {
     uint8_t potPin;
     uint8_t ledPin;
 
-    uint8_t threshold;
+    int threshold;
+
+    int brightness;
     
   public:
-    Detector(uint8_t potPin, uint8_t ledPin, uint8_t threshold);
+    Detector(uint8_t potPin, uint8_t ledPin, int threshold);
     bool updateAndGetState();
+    int getBrightness();
 };
 
 #endif
