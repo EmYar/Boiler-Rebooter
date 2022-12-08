@@ -11,7 +11,7 @@ class ButtonPusher {
     uint8_t pin;
     int servoDefaultAngle;
     int servoPushButtonAngle;
-    const uint8_t delayMs = 500;
+    const uint16_t delayMs = 500;
 
   public:
     ButtonPusher(uint8_t pin, int servoDefaultAngle, int servoPushButtonAngle);
