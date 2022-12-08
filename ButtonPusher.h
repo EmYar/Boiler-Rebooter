@@ -3,15 +3,17 @@
 #define ButtonPusher_h
 
 #include <Arduino.h>
+#include <Servo.h>
 
 class ButtonPusher {
   private:
-    int pin;
-    int maxAngle;
-    
+    Servo servo;
+    uint8_t servoDefaultAngle;
+    uint8_t servoPushButtonAngle;
+    uint8_t servoMaxAngle;
 
   public:
-    ButtonPusher(int pin);
+    ButtonPusher(uint8_t servoPin, uint8_t servoDefaultAngle, uint8_t servoPushButtonAngle, uint8_t servoMaxAngle);
     void pushButton();
 };
 
