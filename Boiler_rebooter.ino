@@ -34,8 +34,11 @@ void loop() {
   if (detector.updateAndGetState()) {
     pressHeaterResetButton();
   } else {
-    
+    stateMonitor.resetAttemptNumber();
+    stateMonitor.displayStatusScreen();
   }
+
+  delay(1000);
 }
 
 void pressHeaterResetButton() {
