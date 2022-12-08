@@ -24,6 +24,7 @@ void StateMonitor::displayStatusScreen() {
     case 0:
       auto uptimeMs = millis();
       // time in "hh:mm:ss" format
+      lcd->print("Uptime:");
       lcd->print(uptimeMs / 3600000);
       lcd->print(":");
       lcd->print(uptimeMs / 60000);
