@@ -40,11 +40,15 @@ void StateMonitor::rotateStatusScreens() {
 }
 
 void StateMonitor::increaseAttemptNumber() {
-  resetAttemptNumber++;
+  attemptNumber++;
 }
 
 uint8_t StateMonitor::getAttemptNumber() {
-  return resetAttemptNumber;
+  return attemptNumber;
+}
+
+void StateMonitor::resetAttemptNumber() {
+  attemptNumber = 0;
 }
 
 void StateMonitor::displayResetAttempt() {
@@ -53,7 +57,7 @@ void StateMonitor::displayResetAttempt() {
 
   lcd->println("Trying to reset");
   lcd->print("the boiler..");
-  lcd->print(resetAttemptNumber);
+  lcd->print(attemptNumber);
  }
 
  void StateMonitor::displayManualResetRequest() {
