@@ -1,11 +1,11 @@
-// StateDisplay.h
-#ifndef StateDisplay_h
-#define StateDisplay_h
+// StateMonitor.h
+#ifndef StateMonitor_h
+#define StateMonitor_h
 
 #include <Arduino.h>
 #include <LiquidCrystal.h>
 
-class StateDisplay {
+class StateMonitor {
   private:
     LiquidCrystal* lcd;
 
@@ -20,7 +20,7 @@ class StateDisplay {
     uint8_t currentBrightness = 0;
 
   public:
-    StateDisplay(uint8_t pinRs, uint8_t pinEn, uint8_t pinDb4, uint8_t pinDb5, uint8_t pinDb6, uint8_t pinDb7);
+    StateMonitor(uint8_t pinRs, uint8_t pinEn, uint8_t pinDb4, uint8_t pinDb5, uint8_t pinDb6, uint8_t pinDb7);
     void rotateStatusScreens();
     void increaseAttemptNumber();
     uint8_t getAttemptNumber();

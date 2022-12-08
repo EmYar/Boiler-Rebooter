@@ -1,14 +1,14 @@
-// StateDisplay.cpp
-#include "StateDisplay.h"
+// StateMonitor.cpp
+#include "StateMonitor.h"
 
-StateDisplay::StateDisplay(uint8_t pinRs, uint8_t pinEn, uint8_t pinDb4, uint8_t pinDb5, uint8_t pinDb6, uint8_t pinDb7) {
+StateMonitor::StateMonitor(uint8_t pinRs, uint8_t pinEn, uint8_t pinDb4, uint8_t pinDb5, uint8_t pinDb6, uint8_t pinDb7) {
   lcd = new LiquidCrystal(pinRs, pinEn, pinDb4, pinDb5, pinDb6, pinDb7);
 
   lcd->begin(16, 2);
   lcd->clear();
 }
 
-void StateDisplay::rotateStatusScreens() {
+void StateMonitor::rotateStatusScreens() {
   if (++currentScreen == lastScreen) {
     currentScreen = 0;
   }
@@ -39,15 +39,15 @@ void StateDisplay::rotateStatusScreens() {
   }
 }
 
-void StateDisplay::increaseAttemptNumber() {
+void StateMonitor::increaseAttemptNumber() {
   resetAttemptNumber++;
 }
 
-uint8_t StateDisplay::getAttemptNumber() {
+uint8_t StateMonitor::getAttemptNumber() {
   return resetAttemptNumber;
 }
 
-void StateDisplay::displayResetAttempt() {
+void StateMonitor::displayResetAttempt() {
   lcd->clear();
   lcd->setCursor(0, 0);
 
