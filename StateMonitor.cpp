@@ -9,6 +9,10 @@ StateMonitor::StateMonitor(uint8_t pinRs, uint8_t pinEn, uint8_t pinDb4, uint8_t
 }
 
 void StateMonitor::rotateStatusScreens() {
+  if (!isScreenRotationEnabled) {
+    return;
+  }
+
   if (++currentScreen > lastScreen) {
     currentScreen = 0;
   }
@@ -20,8 +24,9 @@ void StateMonitor::displayStatusScreen() {
   lcd->clear();
   lcd->setCursor(0, 0);
 
-  switch (currentScreen) {
-    case 0:
+  isScreenRotationEnabled = true;
+
+  if (currentScreen == 0) {
       auto uptimeMs = millis();
       // time in "hh:mm:ss" format
       lcd->print("Uptime:");
@@ -36,11 +41,10 @@ void StateMonitor::displayStatusScreen() {
       lcd->print(softRestarts);
       lcd->print(",Hrd:");
       lcd->print(hardRestarts);
-      break;
-    case 1:
+  } else if (currentScreen == 1) {
       lcd->print("Current brt");
+      lcd->setCursor(0, 1);
       lcd->print(currentBrightness);
-      break;
   }
 }
 
@@ -60,6 +64,8 @@ void StateMonitor::displayResetAttempt() {
   lcd->clear();
   lcd->setCursor(0, 0);
 
+  isScreenRotationEnabled = false;
+
   lcd->println("Trying to reset");
   lcd->print("the boiler..");
   lcd->print(attemptNumber);
@@ -69,6 +75,16 @@ void StateMonitor::displayResetAttempt() {
   lcd->clear();
   lcd->setCursor(0, 0);
 
+  isScreenRotationEnabled = false;
+
   lcd->println("Failed to reset");
   lcd->println("Unplug a boiler");
  }
+
+void StateMonitor::registerSoftReset() {
+  softRestarts++;
+}
+
+ void StateMonitor::registerHardReset() {
+  hardRestarts++;   
+}

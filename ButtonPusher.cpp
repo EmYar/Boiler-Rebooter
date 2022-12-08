@@ -6,6 +6,7 @@ ButtonPusher::ButtonPusher(uint8_t servoPin, uint8_t servoDefaultAngle, uint8_t 
   this->servoDefaultAngle = servoDefaultAngle;
   this->servoPushButtonAngle = servoPushButtonAngle;
   this->servoMaxAngle = servoMaxAngle;
+  
   servo.write(servoDefaultAngle);
 }
 

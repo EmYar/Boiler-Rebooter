@@ -11,6 +11,7 @@ class StateMonitor {
 
     uint8_t currentScreen = 0;
     const uint8_t lastScreen = 1;
+    bool isScreenRotationEnabled = true;
 
     uint8_t attemptNumber = 0;
 
@@ -31,6 +32,9 @@ class StateMonitor {
 
     void displayResetAttempt();
     void displayManualResetRequest();
+
+    void registerSoftReset();
+    void registerHardReset();
 };
 
 #endif
