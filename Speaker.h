@@ -10,6 +10,7 @@ class Speaker {
     
   public:
     Speaker(uint8_t pin);
+    void init();
     void playSoftResetSuccessful();
     void playHardResetRequest();
 };

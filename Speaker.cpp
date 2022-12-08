@@ -4,7 +4,9 @@
 
 Speaker::Speaker(uint8_t pin) {
   this->pin = pin;
+}
 
+void Speaker::init() {
   pinMode(pin, OUTPUT);
 }
 

@@ -1,19 +1,23 @@
 // ButtonPusher.cpp
 #include "ButtonPusher.h"
 
-ButtonPusher::ButtonPusher(uint8_t servoPin, int servoDefaultAngle, int servoPushButtonAngle) {
+ButtonPusher::ButtonPusher(uint8_t pin, int servoDefaultAngle, int servoPushButtonAngle) {
+  this->pin = pin;
   this->servoDefaultAngle = servoDefaultAngle;
   this->servoPushButtonAngle = servoPushButtonAngle;
+}
 
-  servo.attach(servoPin, 0, 180);
+void ButtonPusher::init() {
+  servo.attach(pin);
   servo.write(servoDefaultAngle);
+  delay(delayMs);
 }
 
 void ButtonPusher::pushButton() {
   servo.write(servoPushButtonAngle);
-  delay(1000);
+  delay(delayMs);
   servo.write(servoDefaultAngle);
-  delay(1000);
+  delay(delayMs);
 }
 
 int ButtonPusher::getCurrentAngle() {

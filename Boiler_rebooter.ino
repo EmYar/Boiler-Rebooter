@@ -34,6 +34,10 @@ Speaker speaker(BUZZER_PIN);
 
 void setup() {
   pinMode(BUTTON_PIN, INPUT_PULLUP);
+  detector.init();
+  buttonPusher.init();
+  stateMonitor.init();
+  speaker.init();
 }
 
 void loop() {
@@ -85,7 +89,6 @@ bool checkDisplayRotateButton() {
   }
   return false;
 }
-
 
 
 

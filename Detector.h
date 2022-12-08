@@ -15,6 +15,7 @@ class Detector {
     
   public:
     Detector(uint8_t potPin, uint8_t ledPin, int threshold);
+    void init();
     bool updateAndGetState();
     int getBrightness();
 };

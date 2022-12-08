@@ -8,11 +8,14 @@
 class ButtonPusher {
   private:
     Servo servo;
+    uint8_t pin;
     int servoDefaultAngle;
     int servoPushButtonAngle;
+    const uint8_t delayMs = 500;
 
   public:
-    ButtonPusher(uint8_t servoPin, int servoDefaultAngle, int servoPushButtonAngle);
+    ButtonPusher(uint8_t pin, int servoDefaultAngle, int servoPushButtonAngle);
+    void init();
     void pushButton();
     int getCurrentAngle();
 };

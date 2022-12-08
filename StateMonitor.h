@@ -35,6 +35,8 @@ class StateMonitor {
       Detector* detector
     );
 
+    void init();
+
     void rotateStatusScreens();
     void displayStatusScreen();
 

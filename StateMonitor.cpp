@@ -12,7 +12,9 @@ StateMonitor::StateMonitor(
 ) {
   lcd = new LiquidCrystal(pinRs, pinEn, pinDb4, pinDb5, pinDb6, pinDb7);
   this->detector = detector;
+}
 
+void StateMonitor::init() {
   lcd->begin(16, 2);
   lcd->clear();
 }
