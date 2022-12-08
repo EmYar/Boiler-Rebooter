@@ -3,6 +3,8 @@
 
 StateDisplay::StateDisplay(uint8_t pinRs, uint8_t pinEn, uint8_t pinDb4, uint8_t pinDb5, uint8_t pinDb6, uint8_t pinDb7) {
   lcd = new LiquidCrystal(pinRs, pinEn, pinDb4, pinDb5, pinDb6, pinDb7);
+
+  lcd->begin(16, 2);
   lcd->clear();
 }
 
@@ -37,11 +39,19 @@ void StateDisplay::rotateStatusScreens() {
   }
 }
 
+void StateDisplay::increaseAttemptNumber() {
+  resetAttemptNumber++;
+}
+
+uint8_t StateDisplay::getAttemptNumber() {
+  return resetAttemptNumber;
+}
+
 void StateDisplay::displayResetAttempt() {
   lcd->clear();
   lcd->setCursor(0, 0);
 
   lcd->println("Trying to reset");
   lcd->print("the boiler..");
-  lcd->print(tryNumber);
+  lcd->print(resetAttemptNumber);
  }
