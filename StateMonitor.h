@@ -23,6 +23,7 @@ class StateMonitor {
     StateMonitor(uint8_t pinRs, uint8_t pinEn, uint8_t pinDb4, uint8_t pinDb5, uint8_t pinDb6, uint8_t pinDb7);
 
     void rotateStatusScreens();
+    void displayStatusScreen();
 
     void increaseAttemptNumber();
     uint8_t getAttemptNumber();

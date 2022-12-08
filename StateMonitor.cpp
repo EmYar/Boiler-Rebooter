@@ -9,10 +9,14 @@ StateMonitor::StateMonitor(uint8_t pinRs, uint8_t pinEn, uint8_t pinDb4, uint8_t
 }
 
 void StateMonitor::rotateStatusScreens() {
-  if (++currentScreen == lastScreen) {
+  if (++currentScreen > lastScreen) {
     currentScreen = 0;
   }
 
+  displayStatusScreen();
+}
+
+void StateMonitor::displayStatusScreen() {
   lcd->clear();
   lcd->setCursor(0, 0);
 
