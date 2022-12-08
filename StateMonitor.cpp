@@ -55,3 +55,11 @@ void StateMonitor::displayResetAttempt() {
   lcd->print("the boiler..");
   lcd->print(resetAttemptNumber);
  }
+
+ void StateMonitor::displayManualResetRequest() {
+  lcd->clear();
+  lcd->setCursor(0, 0);
+
+  lcd->println("Failed to reset");
+  lcd->println("Unplug a boiler");
+ }
