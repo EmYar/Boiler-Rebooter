@@ -17,8 +17,8 @@ class StateMonitor {
 
     uint8_t attemptNumber = 0;
 
-    uint8_t softRestarts = 0;
-    uint8_t hardRestarts = 0;
+    uint16_t softRestarts = 0;
+    uint16_t hardRestarts = 0;
 
     Detector* detector = nullptr;
     ButtonPusher* buttonPusher = nullptr;
@@ -41,7 +41,7 @@ class StateMonitor {
     void displayStatusScreen();
 
     void increaseAttemptNumber();
-    uint8_t getAttemptNumber();
+    uint8_t getAttemptNumber() const;
     void resetAttemptNumber();
 
     void displayResetAttempt();

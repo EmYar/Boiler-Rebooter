@@ -43,7 +43,7 @@ void StateMonitor::displayStatusScreen() {
       lcd->print("Uptime:");
       lcd->print(uptimeMs / 3600000);
       lcd->print(":");
-      lcd->print(uptimeMs / 60000);
+      lcd->print((uptimeMs / 60000) % 60);
       lcd->print(":");
       lcd->print((uptimeMs / 1000) % 60);
       // resets stats in "Sft:00,Hrd:00" format
@@ -63,7 +63,7 @@ void StateMonitor::increaseAttemptNumber() {
   attemptNumber++;
 }
 
-uint8_t StateMonitor::getAttemptNumber() {
+uint8_t StateMonitor::getAttemptNumber() const {
   return attemptNumber;
 }
 
