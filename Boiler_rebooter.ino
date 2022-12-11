@@ -1,6 +1,7 @@
 #include "Detector.h"
-#include "StateMonitor.h"
 #include "ButtonPusher.h"
+#include "StateMonitor.h"
+#include "DisplayRotateScreensButton.h"
 #include "Speaker.h"
 
 constexpr uint8_t POT_PIN = A0;
@@ -30,13 +31,14 @@ constexpr uint8_t maxAttemptsCount = 3;
 Detector detector(POT_PIN, LED_PIN, BRIGHTNESS_THRESHOLD);
 ButtonPusher buttonPusher(SERVO_PIN, SERVO_DEFAULT_ANGLE, SERVO_PRESS_BUTTON_ANGLE);
 StateMonitor stateMonitor(LCD_PIN_RS, LCD_PIN_EN, LCD_PIN_DB4, LCD_PIN_DB5, LCD_PIN_DB6, LCD_PIN_DB7, &detector);
+DisplayRotateScreensButton displayRotateScreensButton(BUTTON_PIN, &stateMonitor);
 Speaker speaker(BUZZER_PIN);
 
 void setup() {
-  pinMode(BUTTON_PIN, INPUT_PULLUP);
   detector.init();
   buttonPusher.init();
   stateMonitor.init();
+  displayRotateScreensButton.init();
   speaker.init();
 }
 
@@ -51,9 +53,7 @@ void loop() {
     stateMonitor.displayStatusScreen();
   }
 
-  if (checkDisplayRotateButton()) {
-    stateMonitor.rotateStatusScreens();
-  }
+  displayRotateScreensButton.processPush();
 
   delay(1000);
 }
@@ -78,16 +78,6 @@ void pressHeaterResetButton() {
     speaker.playSoftResetSuccessful();
     stateMonitor.resetAttemptNumber();
   }
-}
-
-bool checkDisplayRotateButton() {
-  if (!digitalRead(BUTTON_PIN)) {
-    delay(10);
-    if (!digitalRead(BUTTON_PIN)) {
-      return true;
-    }
-  }
-  return false;
 }
 
 
