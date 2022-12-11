@@ -69,7 +69,7 @@ void pressHeaterResetButton() {
   buttonPusher.pushButton();
   stateMonitor.increaseAttemptNumber();
 
-  delay(10000);
+  delay(15000);
 
   if (detector.updateAndGetState()) {
     pressHeaterResetButton();
@@ -79,8 +79,6 @@ void pressHeaterResetButton() {
     stateMonitor.resetAttemptNumber();
   }
 }
-
-
 
 
 
