@@ -15,7 +15,7 @@ class StateMonitor {
     const uint8_t lastScreen = 1;
     bool isScreenRotationEnabled = true;
 
-    uint8_t attemptNumber = 0;
+    bool hardResetNeeded = false;
 
     uint16_t softRestarts = 0;
     uint16_t hardRestarts = 0;
@@ -40,12 +40,11 @@ class StateMonitor {
     void rotateStatusScreens();
     void displayStatusScreen();
 
-    void increaseAttemptNumber();
-    uint8_t getAttemptNumber() const;
-    void resetAttemptNumber();
+    void setHardResetNeeded(bool value);
+    bool isHardResetNeeded() const;
 
-    void displayResetAttempt();
-    void displayManualResetRequest();
+    void displayResetAttempt(uint8_t attemptNumber);
+    void displayHardResetRequest();
 
     void registerSoftReset();
     void registerHardReset();

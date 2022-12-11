@@ -28,14 +28,14 @@ constexpr int BRIGHTNESS_THRESHOLD = 300;
 
 constexpr uint8_t maxAttemptsCount = 3;
 
-Detector detector(POT_PIN, LED_PIN, BRIGHTNESS_THRESHOLD);
+Detector boilerResetLedDetector(POT_PIN, LED_PIN, BRIGHTNESS_THRESHOLD);
 ButtonPusher buttonPusher(SERVO_PIN, SERVO_DEFAULT_ANGLE, SERVO_PRESS_BUTTON_ANGLE);
-StateMonitor stateMonitor(LCD_PIN_RS, LCD_PIN_EN, LCD_PIN_DB4, LCD_PIN_DB5, LCD_PIN_DB6, LCD_PIN_DB7, &detector);
+StateMonitor stateMonitor(LCD_PIN_RS, LCD_PIN_EN, LCD_PIN_DB4, LCD_PIN_DB5, LCD_PIN_DB6, LCD_PIN_DB7, &boilerResetLedDetector);
 DisplayRotateScreensButton displayRotateScreensButton(BUTTON_PIN, &stateMonitor);
 Speaker speaker(BUZZER_PIN);
 
 void setup() {
-  detector.init();
+  boilerResetLedDetector.init();
   buttonPusher.init();
   stateMonitor.init();
   displayRotateScreensButton.init();
@@ -43,13 +43,16 @@ void setup() {
 }
 
 void loop() {
-  if (detector.updateAndGetState()) {
-    pressHeaterResetButton();
-  } else {
-    if (stateMonitor.getAttemptNumber() == maxAttemptsCount) {
-      stateMonitor.registerHardReset();
+  if (boilerResetLedDetector.updateAndGetState()) {
+    if (stateMonitor.isHardResetNeeded()) {
+      stateMonitor.displayHardResetRequest();
+      speaker.playHardResetRequest();
+    } else {
+      pressHeaterResetButton();
     }
-    stateMonitor.resetAttemptNumber();
+  } else if (stateMonitor.isHardResetNeeded()) {
+    stateMonitor.registerHardReset();
+    stateMonitor.setHardResetNeeded(false);
     stateMonitor.displayStatusScreen();
   }
 
@@ -59,27 +62,19 @@ void loop() {
 }
 
 void pressHeaterResetButton() {
-  if (stateMonitor.getAttemptNumber() == maxAttemptsCount) {
-    stateMonitor.displayManualResetRequest();
-    speaker.playHardResetRequest();
-    return;
+  for (uint8_t attemptNumber = 1; attemptNumber <= maxAttemptsCount; attemptNumber++) {
+    stateMonitor.displayResetAttempt(attemptNumber);
+    buttonPusher.pushButton();
+
+    delay(15000);
+
+    if (!boilerResetLedDetector.updateAndGetState()) {
+      stateMonitor.registerSoftReset();
+      speaker.playSoftResetSuccessful();
+      stateMonitor.displayStatusScreen();
+      return;
+    }
   }
 
-  stateMonitor.displayResetAttempt();
-  buttonPusher.pushButton();
-  stateMonitor.increaseAttemptNumber();
-
-  delay(15000);
-
-  if (detector.updateAndGetState()) {
-    pressHeaterResetButton();
-  } else {
-    stateMonitor.registerSoftReset();
-    speaker.playSoftResetSuccessful();
-    stateMonitor.resetAttemptNumber();
-  }
+  stateMonitor.setHardResetNeeded(true);
 }
-
-
-
-

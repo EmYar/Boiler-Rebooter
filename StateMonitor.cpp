@@ -59,19 +59,15 @@ void StateMonitor::displayStatusScreen() {
   }
 }
 
-void StateMonitor::increaseAttemptNumber() {
-  attemptNumber++;
+void StateMonitor::setHardResetNeeded(bool value) {
+  hardResetNeeded = value;
 }
 
-uint8_t StateMonitor::getAttemptNumber() const {
-  return attemptNumber;
+bool StateMonitor::isHardResetNeeded() const {
+  return hardResetNeeded;
 }
 
-void StateMonitor::resetAttemptNumber() {
-  attemptNumber = 0;
-}
-
-void StateMonitor::displayResetAttempt() {
+void StateMonitor::displayResetAttempt(uint8_t attemptNumber) {
   lcd->clear();
   lcd->setCursor(0, 0);
 
@@ -80,10 +76,10 @@ void StateMonitor::displayResetAttempt() {
   lcd->print("Trying to reset");
   lcd->setCursor(0, 1);
   lcd->print("the boiler..");
-  lcd->print(attemptNumber + 1);
+  lcd->print(attemptNumber);
  }
 
- void StateMonitor::displayManualResetRequest() {
+ void StateMonitor::displayHardResetRequest() {
   lcd->clear();
   lcd->setCursor(0, 0);
 
