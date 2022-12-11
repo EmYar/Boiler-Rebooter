@@ -54,6 +54,8 @@ void loop() {
     stateMonitor.registerHardReset();
     stateMonitor.setHardResetNeeded(false);
     stateMonitor.displayStatusScreen();
+  } else {
+    stateMonitor.displayStatusScreen();
   }
 
   displayRotateScreensButton.processPush();
